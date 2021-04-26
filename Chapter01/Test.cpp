@@ -3,16 +3,14 @@
 //
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 int main()
 {
-    const int line_size = 8;
-    int cnt = 8;
-
-    string a_string = "test_string";
-    cout << a_string
-         << (cnt % line_size ? ' ' : '\n');
+    int test[10];
+    for (int i = 0; i < 10; ++i)
+        cout << test[i] << "\t";
 }
 

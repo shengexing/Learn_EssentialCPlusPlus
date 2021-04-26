@@ -36,3 +36,6 @@
 
 # debug file
 cmake-build-debug
+
+# cmake file
+CMakeLists.txt
