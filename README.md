@@ -75,4 +75,57 @@
 > ```
 > 运行结果如下：  
 > ![示例图片](https://timem-edu.oss-cn-chengdu.aliyuncs.com/github/Learn_EssentialCPlusPlus/Snipaste_2021-04-25_10-11-14.png)
+
+##### 练习 1.5
+编写一个程序，能够询问用户的姓名，并读取用户所输入的内容。请确保用户输入的名称长度大于两个字符。
+如果用户的确输入了有效名称，就响应一些信息。请以两种方式实现：第一种使用C-style字符串，第二种使用string对象。
+
+##### 解答 1.5
+> 方式一：  
+> 代码片段：
+> ```c++
+> #include <stdio.h>
+> #include <string.h>
+>
+> int main()
+> {
+>     char str[20];
+>     printf("Please input your name:\n");
+>     scanf("%s", str);
+>     size_t len = strlen(str);
+>     if (len > 1)
+>         printf("Hello, %s", str);
+>     else printf("Error!");
+>
+>    return 0;
+> }
+> ```
+> 运行结果：  
+> ![示例图片](https://timem-edu.oss-cn-chengdu.aliyuncs.com/github/Learn_EssentialCPlusPlus/Snipaste_2021-04-27_01-08-11.png)  
 > 
+> ![示例图片](https://timem-edu.oss-cn-chengdu.aliyuncs.com/github/Learn_EssentialCPlusPlus/Snipaste_2021-04-27_01-12-28.png)  
+>
+>
+> 方式二：  
+> 代码片段：
+> ```c++
+> #include <iostream>
+> #include <string>
+>
+> using namespace std;
+> 
+> int main()
+> {
+>     string str;
+>     cout << "Please input your name:\n";
+>     cin >> str;
+>     if (str.length() > 1)
+>         cout << "Hello, " << str;
+>     else cout << "Error!";
+>
+>     return 0;
+> }
+> ```
+> 运行结果：（和方式一相同）
+
+##### 练习 1.6
