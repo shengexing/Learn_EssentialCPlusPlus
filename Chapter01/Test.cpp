@@ -5,61 +5,50 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <stdio.h>
-#include <string.h>
+#include <algorithm>
 
 using namespace std;
 
-void outputFile();
-void inputFile(string usr_name);
+// 降序比较大小
+bool cmp(string a, string b) {
+    return a > b;
+}
 
 int main()
 {
-    string str;
-    cout << "Please input your name:\n";
-    cin >> str;
-    if (str.length() > 1)
-        cout << "Hello, " << str;
-    else cout << "Error!";
+    // 01. 定义变量
+    vector<string> seq_str(100);
+
+    // 02. 打开源文件
+    ifstream infile("source.txt");
+
+    // 03. 读取文件
+    int i = 0;
+    if (infile.is_open())
+    {
+        while (!infile.eof())
+            getline(infile, seq_str[i++]);
+    } else cerr << "Oops! Unable to save session data!\n";
+
+    // 04. 关闭文件
+    infile.close();
+
+    // 05. 排序
+    sort(seq_str.begin(), seq_str.end(), cmp);
+
+    // 06. 输出排序结果
+    cout << "The result of sort is:\n";
+    ofstream outfile("target.txt", ios_base::app);
+    if (outfile.is_open())
+    {
+        while (i > 0)
+        {
+            cout << seq_str[--i] << "\t";
+            outfile << seq_str[i] << "\t";
+        }
+    } else cerr << "Oops! Unable to save session data!\n";
+    outfile << endl;
+    outfile.close();
 
     return 0;
-}
-
-void outputFile()
-{
-    ofstream outfile("seq_data.txt", ios_base::app);
-    string usr_name = "timem";
-    int num_tries = 2, num_right = 1;
-    if (!outfile)
-    {
-        cerr << "Oops! Unable to save session data!\n";
-    } else
-    {
-        outfile << usr_name << ' '
-                << num_tries << ' '
-                << num_right << endl;
-    }
-}
-
-void inputFile(string usr_name)
-{
-    ifstream infile("seq_data.txt");
-    if (!infile)
-    {
-        cerr << "Oops! Unable to save session data!\n";
-    } else
-    {
-        string name;
-        int nt, nc;
-        while (infile >> name)
-        {
-            infile >> nt >> nc;
-            if (name == usr_name)
-            {
-                cout << "Welcome back, " << usr_name
-                     << "\n Your current score is " << nc
-                     << " out of " << nt << "\nGood Luck!\n";
-            }
-        }
-    }
 }
