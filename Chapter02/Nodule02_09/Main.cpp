@@ -1,10 +1,11 @@
-// 小结：2.8 函数指针带来更大的弹性
-// Created by TimeM on 2021/5/9 0009.
+// 小结：2.9 设定头文件
+// Created by TimeM on 2021/5/27 0027.
 //
 
 #include <iostream>
 #include <vector>
 #include <string>
+#include "NumSeq.h"
 
 using namespace std;
 
@@ -38,23 +39,7 @@ void display(const string& str, int num1, int num2, ostream &out = cout)
     out << str << ", " << num1 << ", " << num2;
 }
 
-/**
- * 使用模板函数
- * @tparam elemType
- * @param msg
- * @param vec
- * @param out
- */
-template <typename elemType> void display(const string &msg, const vector<elemType> &vec, ostream &out = cout)
-{
-    out << msg;
-    for (int ix = 0; ix < vec.size(); ++ix)
-    {
-        elemType t = vec[ix];
-        out << t << ' ';
-    }
-    out << endl;
-}
+
 
 /**
  * 判断 size 是否合法
@@ -73,14 +58,6 @@ bool is_size_ok(int size)
     }
     return true;
 }
-
-const vector<int> *fibon_seq(int);
-const vector<int> *lucas_seq(int);
-const vector<int> *pell_seq(int);
-const vector<int> *triang_seq(int);
-const vector<int> *square_seq(int);
-const vector<int> *pent_seq(int);
-bool seq_elem(int, int&, const vector<int>* (*)(int));
 
 /**
  * 计算 Fibonacci 数列中的 size 个元素，并返回持有这些元素的静态容器的地址
@@ -254,37 +231,12 @@ const vector<int> *pent_seq(int size)
     return &elems;
 }
 
-/**
- * 设置为 inline 函数
- * @param pos
- * @param elem
- * @return
- */
-inline bool seq_elem(int pos, int &elem, const vector<int>* (*seq_ptr)(int) = 0)
-{
-    if (!seq_ptr)
-    {
-        display("Internal Error: seq_ptr is set to null!");
-        elem = 0;
-        return false;
-    }
-
-    const vector<int> *pseq = seq_ptr(pos);
-    if (!pseq)
-    {
-        elem = 0;
-        return false;
-    }
-    display("The pseq is: ", *pseq);
-    elem = (*pseq)[pos - 1];
-    return true;
-}
-
 int main()
 {
     int size = 10, elem;
     // seq_array 是一个数组，内放函数指针
-    const vector<int>* (*seq_array[])(int) = {fibon_seq, lucas_seq, pell_seq, triang_seq, square_seq, pent_seq};
+    const vector<int>* (*seq_array[seq_cnt])(int) = {fibon_seq, lucas_seq, pell_seq, triang_seq, square_seq, pent_seq};
+
     // ns_type 是一个枚举，0~5
     enum ns_type {
         ns_fibon, ns_lucas, ns_pell, ns_triang, ns_square, ns_pent
